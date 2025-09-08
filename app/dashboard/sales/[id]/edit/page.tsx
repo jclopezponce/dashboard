@@ -1,7 +1,11 @@
 import Form from '@/components/orders/edit-form';
 import { fetchCustomers, fetchProducts, fetchOrderById } from '@/lib/data';
 
-export default async function Page({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: { id: string }
+}
+
+export default async function Page({ params } : PageProps) {
   const { id } = params; // synchronous
 
   // Fetch data in parallel
