@@ -4,6 +4,7 @@ import { fetchCustomers, fetchProducts, fetchOrderById } from '@/lib/data';
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params; // synchronous
 
+  // Fetch data in parallel
   const [products, customers, orderData] = await Promise.all([
     fetchProducts(),
     fetchCustomers(),
