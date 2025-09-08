@@ -1,10 +1,14 @@
 import Form from '@/components/orders/edit-form';
 import { fetchCustomers, fetchProducts, fetchOrderById } from '@/lib/data';
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const { id } = params; // synchronous
+export default async function Page({
+  params,
+}: {
+  params: { id: string }; // only type params, do NOT declare PageProps
+}) {
+  const { id } = params; // synchronous, do NOT await
 
-  // Fetch all data in parallel for performance
+  // Fetch all required data in parallel
   const [products, customers, orderData] = await Promise.all([
     fetchProducts(),
     fetchCustomers(),
@@ -13,7 +17,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const { order, items } = orderData;
 
-  // Transform items into form-friendly shape
+  // Transform items for the form
   const orderLines = items.map(item => ({
     product_id: item.product_id.toString(),
     quantity: item.quantity,
@@ -25,7 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       products={products}
       customers={customers}
       order={order}
-      initialOrderLines={orderLines} // prefill the form
+      initialOrderLines={orderLines} // prefill form
     />
   );
 }
