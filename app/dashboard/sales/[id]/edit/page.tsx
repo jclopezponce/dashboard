@@ -1,12 +1,11 @@
 import Form from '@/components/orders/edit-form';
 import { fetchCustomers, fetchProducts, fetchOrderById } from '@/lib/data';
 
-export default async function Page({
-  params,
-}: {
-  params: { id: string }; // only type params, do NOT declare PageProps
+export default async function Page(props: {
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params; // synchronous, do NOT await
+  const params = props.params;
+  const  id  = (await params).id; // synchronous, do NOT await
 
   // Fetch all required data in parallel
   const [products, customers, orderData] = await Promise.all([
