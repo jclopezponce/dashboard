@@ -6,28 +6,29 @@ interface PageProps {
   searchParams?: { [key: string]: string | string[] | undefined }
 }
 
-export default async function Page({ params}:  PageProps) {
-  const { id } = params;
+export default async function Page({ params }: PageProps) {
+  const { id } = params // no await here
 
-  // Fetch required data
-  const products = await fetchProducts();
-  const customers = await fetchCustomers();
-  const { order, items } = await fetchOrderById(id);
-  console.log(order);
+  const [products, customers, orderData] = await Promise.all([
+    fetchProducts(),
+    fetchCustomers(),
+    fetchOrderById(id),
+  ])
 
-  // Transform order items to your ProductLine type if needed
+  const { order, items } = orderData
+
   const orderLines = items.map(item => ({
     product_id: item.product_id.toString(),
     quantity: item.quantity,
-    price: item.product_price
-  }));
+    price: item.product_price,
+  }))
 
   return (
     <Form
       products={products}
       customers={customers}
       order={order}
-      initialOrderLines={orderLines} // Pass existing order items to prefill the form
+      initialOrderLines={orderLines}
     />
-  );
+  )
 }
