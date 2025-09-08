@@ -8,15 +8,27 @@ importers:
 
   .:
     dependencies:
+      '@emotion/cache':
+        specifier: ^11.14.0
+        version: 11.14.0
       '@emotion/react':
         specifier: ^11.14.0
         version: 11.14.0(@types/react@19.1.10)(react@19.1.0)
       '@emotion/styled':
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react@19.1.0)
+      '@heroicons/react':
+        specifier: ^2.2.0
+        version: 2.2.0(react@19.1.0)
+      '@mui/icons-material':
+        specifier: ^7.3.1
+        version: 7.3.2(@mui/material@7.3.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@types/react@19.1.10)(react@19.1.0)
       '@mui/material':
         specifier: ^7.3.1
         version: 7.3.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@mui/material-nextjs':
+        specifier: ^7.3.2
+        version: 7.3.2(@emotion/cache@11.14.0)(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(next@15.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       '@neondatabase/serverless':
         specifier: ^1.0.1
         version: 1.0.1
@@ -41,6 +53,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      eslint-plugin-jsx-a11y:
+        specifier: ^6.10.2
+        version: 6.10.2(eslint@9.33.0(jiti@2.5.1))
       lucide-react:
         specifier: ^0.539.0
         version: 0.539.0(react@19.1.0)
@@ -267,6 +282,11 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
+  '@heroicons/react@2.2.0':
+    resolution: {integrity: sha512-LMcepvRaS9LYHJGsF0zzmgKCUim/X3N/DQKc4jepAXJ7l8QxJ1PmxJzqplF2Z3FE4PqBAIGyJAQ/w4B5dsqbtQ==}
+    peerDependencies:
+      react: '>= 16 || ^19.0.0-rc'
+
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
@@ -431,6 +451,35 @@ packages:
 
   '@mui/core-downloads-tracker@7.3.1':
     resolution: {integrity: sha512-+mIK1Z0BhOaQ0vCgOkT1mSrIpEHLo338h4/duuL4TBLXPvUMit732mnwJY3W40Avy30HdeSfwUAAGRkKmwRaEQ==}
+
+  '@mui/icons-material@7.3.2':
+    resolution: {integrity: sha512-TZWazBjWXBjR6iGcNkbKklnwodcwj0SrChCNHc9BhD9rBgET22J1eFhHsEmvSvru9+opDy3umqAimQjokhfJlQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@mui/material': ^7.3.2
+      '@types/react': ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@mui/material-nextjs@7.3.2':
+    resolution: {integrity: sha512-PYRGXf32vNOdKOrTOkoNmWipFKpMODQzrfSPaQQb0SsuTRWRyPxP1WR9A7JccJvsmvbBhdQ9bcBqrCD8oJub4w==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@emotion/cache': ^11.11.0
+      '@emotion/react': ^11.11.4
+      '@emotion/server': ^11.11.0
+      '@types/react': ^17.0.0 || ^18.0.0 || ^19.0.0
+      next: ^13.0.0 || ^14.0.0 || ^15.0.0
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@emotion/cache':
+        optional: true
+      '@emotion/server':
+        optional: true
+      '@types/react':
+        optional: true
 
   '@mui/material@7.3.1':
     resolution: {integrity: sha512-Xf6Shbo03YmcBedZMwSpEFOwpYDtU7tC+rhAHTrA9FHk0FpsDqiQ9jUa1j/9s3HLs7KWb5mDcGnlwdh9Q9KAag==}
@@ -2750,6 +2799,10 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
+  '@heroicons/react@2.2.0(react@19.1.0)':
+    dependencies:
+      react: 19.1.0
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.6':
@@ -2873,6 +2926,24 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
 
   '@mui/core-downloads-tracker@7.3.1': {}
+
+  '@mui/icons-material@7.3.2(@mui/material@7.3.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@types/react@19.1.10)(react@19.1.0)':
+    dependencies:
+      '@babel/runtime': 7.28.3
+      '@mui/material': 7.3.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
+    optionalDependencies:
+      '@types/react': 19.1.10
+
+  '@mui/material-nextjs@7.3.2(@emotion/cache@11.14.0)(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(next@15.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@babel/runtime': 7.28.3
+      '@emotion/react': 11.14.0(@types/react@19.1.10)(react@19.1.0)
+      next: 15.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
+    optionalDependencies:
+      '@emotion/cache': 11.14.0
+      '@types/react': 19.1.10
 
   '@mui/material@7.3.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react@19.1.0))(@types/react@19.1.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
