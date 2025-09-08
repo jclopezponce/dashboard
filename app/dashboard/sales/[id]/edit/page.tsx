@@ -1,27 +1,22 @@
 import Form from '@/components/orders/edit-form';
 import { fetchCustomers, fetchProducts, fetchOrderById } from '@/lib/data';
 
-interface PageProps {
-  params: { id: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
-}
-
-export default async function Page({ params }: PageProps) {
-  const { id } = params // no await here
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = params; // synchronous
 
   const [products, customers, orderData] = await Promise.all([
     fetchProducts(),
     fetchCustomers(),
     fetchOrderById(id),
-  ])
+  ]);
 
-  const { order, items } = orderData
+  const { order, items } = orderData;
 
   const orderLines = items.map(item => ({
     product_id: item.product_id.toString(),
     quantity: item.quantity,
     price: item.product_price,
-  }))
+  }));
 
   return (
     <Form
@@ -30,5 +25,5 @@ export default async function Page({ params }: PageProps) {
       order={order}
       initialOrderLines={orderLines}
     />
-  )
+  );
 }
