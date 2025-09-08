@@ -1,8 +1,13 @@
 import Form from '@/components/orders/edit-form';
 import { fetchCustomers, fetchProducts, fetchOrderById } from '@/lib/data';
 
-export default async function Page(props: { params: { id: string } }) {
-  const { id } = await props.params;
+interface PageProps {
+  params: { id: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
+}
+
+export default async function Page({ params}:  PageProps) {
+  const { id } = params;
 
   // Fetch required data
   const products = await fetchProducts();
