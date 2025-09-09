@@ -22,7 +22,7 @@ export default async function Page(props: {
   const totalPages = await fetchProductsPages(query);
 
   return (
-    <div className="container w-full mx-auto py-10">
+    <div className="container w-full py-10">
       <div className="flex flex-row justify-end">
       <SearchInput />
       <Button asChild>

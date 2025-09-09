@@ -39,7 +39,7 @@ export default function RootLayout({
           >
         <SidebarProvider>
       <AppSidebar />
-      <main className="w-full m-4 px-2">
+      <main className="w-full my-4 px-2">
         <SidebarTrigger />
          <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
       </main>

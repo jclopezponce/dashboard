@@ -15,10 +15,10 @@ export default async function OrdersTable({
 
   
   return (
-    <div className="mt-6 flow-root">
-      <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
-          <div className="md:hidden">
+    <div className="mt-6 flow-root block md:overflow-visible overflow-x-auto">
+      <div className="inline-block min-w-full align-middle ">
+        <div className="rounded-lg bg-gray-50 p-2 md:pt-0 ">
+          {/* <div className="md:hidden">
             {orders?.map((order) => (
               <div
               key={order.order_id ?? order.name}
@@ -51,11 +51,11 @@ export default async function OrdersTable({
                 </div>
               </div>
             ))}
-          </div>
-          <table className="hidden min-w-full text-gray-900 md:table">
+          </div> */}
+          <table className="min-w-full text-gray-900 md:table ">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                <th scope="col" className="px-4 py-5 font-medium sm:pl-6 sticky left-0 bg-gray-50 z-10">
                   Order N°
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
@@ -81,8 +81,8 @@ export default async function OrdersTable({
                   key={order.order_id ?? order.name}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex items-center gap-3">
+                  <td className="whitespace-nowrap py-3 pl-6 pr-3 sticky left-0 bg-white z-10">
+                    <div className="flex items-center gap-3 ">
                      
                       <p>{order.order_id}</p>
                     </div>
