@@ -243,24 +243,25 @@ export async function fetchOrderById(id : string) {
   }
 }
 
-export async function fetchOrders(query?: number) {
+export interface Order {
+  month: string;
+  orders: number;
+  [key: string]: string | number | Date | null | undefined;
+}
+
+export async function fetchOrders(): Promise<Order[]> {
   try {
-    const rows = await sql<{
-      month: string;
-      orders: number;
-    }[]>`
+    const rows = await sql<Order[]>`
       SELECT 
-        TO_CHAR(order_date, 'Mon') AS month,
+        TO_CHAR(created_at, 'Mon') AS month,
         COUNT(*)::int AS orders
       FROM orders
       GROUP BY month
-      ORDER BY MIN(order_date);
+      ORDER BY MIN(created_at);
     `;
-
-    // `rows` is already an array of objects
     return rows;
   } catch (err) {
     console.error("Database Error:", err);
-    throw new Error("Failed to fetch all orders.");
+    return []; // fallback to empty array
   }
 }
