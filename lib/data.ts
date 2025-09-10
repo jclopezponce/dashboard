@@ -242,3 +242,25 @@ export async function fetchOrderById(id : string) {
     throw new Error('Failed to fetch Order.');
   }
 }
+
+export async function fetchOrders(query?: number) {
+  try {
+    const rows = await sql<{
+      month: string;
+      orders: number;
+    }[]>`
+      SELECT 
+        TO_CHAR(order_date, 'Mon') AS month,
+        COUNT(*)::int AS orders
+      FROM orders
+      GROUP BY month
+      ORDER BY MIN(order_date);
+    `;
+
+    // `rows` is already an array of objects
+    return rows;
+  } catch (err) {
+    console.error("Database Error:", err);
+    throw new Error("Failed to fetch all orders.");
+  }
+}
