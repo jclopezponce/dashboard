@@ -253,11 +253,11 @@ export async function fetchOrders(): Promise<Order[]> {
   try {
     const rows = await sql<Order[]>`
       SELECT 
-        TO_CHAR(created_at, 'Mon') AS month,
+        TO_CHAR(order_date, 'Mon') AS month,
         COUNT(*)::int AS orders
       FROM orders
       GROUP BY month
-      ORDER BY MIN(created_at);
+      ORDER BY MIN(order_date);
     `;
     return rows;
   } catch (err) {
