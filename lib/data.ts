@@ -265,3 +265,39 @@ export async function fetchOrders(): Promise<Order[]> {
     return []; // fallback to empty array
   }
 }
+
+export async function fetchTotalOrders(): Promise<number> {
+  try {
+    const result = await sql<{ count: number }[]>`
+      SELECT COUNT(*)::int AS count FROM orders;
+    `;
+    return result[0]?.count || 0;
+  } catch (err) {
+    console.error("Database Error:", err);
+    return 0; // fallback to 0
+  } 
+}
+
+export async function fetchTotalSalesAmount(): Promise<number> {
+  try {
+    const result = await sql<{ total: number }[]>`
+      SELECT COALESCE(SUM(total_amount), 0)::float AS total FROM orders;
+    `;
+    return result[0]?.total || 0;
+  } catch (err) {
+    console.error("Database Error:", err);
+    return 0; // fallback to 0
+  } 
+}
+
+export async function fetchTotalCustomers(): Promise<number> {
+  try {
+    const result = await sql<{ count: number }[]>`
+      SELECT COUNT(*)::int AS count FROM customers;
+    `;
+    return result[0]?.count || 0;
+  } catch (err) {
+    console.error("Database Error:", err);
+    return 0; // fallback to 0
+  }
+}

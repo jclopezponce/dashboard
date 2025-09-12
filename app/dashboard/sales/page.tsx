@@ -1,5 +1,5 @@
 import  OrdersTable from "@/components/orders/table"
-import {SearchInput} from "@/components/products/search-input"
+import {SearchInput} from "@/components/search-input"
 import { Suspense } from 'react';
 import { fetchOrdersPages } from "@/lib/data";
 import { Button } from "@/components/ui/button";

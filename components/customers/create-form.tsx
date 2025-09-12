@@ -44,14 +44,14 @@ export default function Form() {
 
   return (
     <form action={formAction}>
-      <div className="border-b border-white/10 pb-12">
+      <div className="border-b border-white/10 bg-gray-50 rounded-xl px-2 pb-12">
         <h2 className="text-base/10 font-semibold">New Customer</h2>
         <p className="mt-1 text-sm/6 text-gray-400">Create new customer</p>
 
         {/* Name */}
         <div className="col-span-full mt-8">
           <label className="block text-sm/6 font-medium">Name</label>
-          <div className="mt-2">
+          <div>
             <input
               
               id="name"
@@ -59,7 +59,7 @@ export default function Form() {
               name="customerName"
               defaultValue={state.previousValues?.name || ''}
               onChange={handleChange}
-              className={`block w-5/6 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
+              className={`block w-full md:w-5/6 mb-2 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
                 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
                 focus:outline-indigo-500 sm:text-sm/6 ${errors?.name ? 'border-red-500 border-2' : 'border-gray-300'}`}
 
@@ -70,7 +70,7 @@ export default function Form() {
         {/* Email */}
         <div className="col-span-full">
           <label className="block text-sm/6 font-medium">Email</label>
-          <div className="mt-2">
+          <div>
             <input
               
               id="email"
@@ -78,7 +78,7 @@ export default function Form() {
               name="customerEmail"
               defaultValue={state.previousValues?.email || ''}
               onChange={handleChange}
-              className={`block w-5/6 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
+              className={`block w-full md:w-5/6 mb-2 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
                 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
                 focus:outline-indigo-500 sm:text-sm/6 ${errors?.email ? 'border-red-500 border-2' : 'border-gray-300'}`}
 
@@ -86,43 +86,6 @@ export default function Form() {
             />
           </div>
         </div>
-
-        {/* Price 
-        <div className="col-span-full">
-          <label className="block text-sm/6 font-medium">Price</label>
-          <div className="mt-2">
-            <input
-              id="price"
-              type="number"
-              name="productPrice"
-              defaultValue={state.previousValues?.price || ''}
-              onChange={handleChange}
-              className={`block w-5/6 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
-                placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
-                focus:outline-indigo-500 sm:text-sm/6 ${errors?.price ? 'border-red-500 border-2' : 'border-gray-300'}`}
-              aria-describedby="price-error"
-            />
-          </div>
-        </div>
-
-        Total Sales 
-        <div className="col-span-full">
-          <label className="block text-sm/6 font-medium">Total Sales</label>
-          <div className="mt-2">
-            <input
-              id="totalsales"
-              type="number"
-              name="productTotalSales"
-              defaultValue={state.previousValues?.totalSales || ''}
-              onChange={handleChange}
-              className={`block w-5/6 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
-                placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
-                focus:outline-indigo-500 sm:text-sm/6 ${errors?.totalSales ? 'border-red-500 border-2' : 'border-gray-300'}`}
-              aria-describedby="sales-error"
-            />
-          </div>
-        </div>*/}
-
         {/* Status */}
         <label className="block text-sm/6 font-medium">Status</label>
         <select
@@ -130,7 +93,7 @@ export default function Form() {
           id="status"
           value={status}
           onChange={handleStatusChange}
-          className={`block w-5/6 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
+          className={`block w-full md:w-5/6 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
             placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
             focus:outline-indigo-500 sm:text-sm/6 ${errors?.status ? 'border-red-500 border-2' : 'border-gray-300'}`}
           aria-describedby="status-error"

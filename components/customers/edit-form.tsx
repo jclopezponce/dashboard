@@ -12,24 +12,24 @@ export default function Form ({customer}: {customer: CustomerForm}){
  
     return (
         <form action={formAction}>
-             <div className="border-b border-white/10 pb-12">
+             <div className="border-b border-white/10 bg-gray-50 rounded-xl px-2 pb-12">
       <h2 className="text-base/10 font-semibold">Update Customer</h2>
-      <p className="mt-1 text-sm/6 text-gray-400">Update data of the customer</p>
+      <p className="mt-1 text-sm/6 text-gray-400">Manage Customer</p>
 
         <div className="col-span-full mt-8">
           <label className="block text-sm/6 font-medium">Name</label>
-          <div className="mt-2">
-            <input id="name" type="text" name="customerName" defaultValue={customer.name} className="block w-5/6 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" aria-describedby="name-error" />
+          <div>
+            <input id="name" type="text" name="customerName" defaultValue={customer.name} className="block w-full md:w-5/6 mb-2 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" aria-describedby="name-error" />
           </div>
         </div>
           <div className="col-span-full">
           <label className="block text-sm/6 font-medium">Email</label>
-          <div className="mt-2">
-            <input id="email" type="email" name="customerEmail" defaultValue={customer.email} className="block w-5/6 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" aria-describedby="name-error" />
+          <div>
+            <input id="email" type="email" name="customerEmail" defaultValue={customer.email} className="block w-full md:w-5/6 mb-2 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" aria-describedby="name-error" />
           </div>
         </div>
         <label className="block text-sm/6 font-medium">Status</label>
-        <select name="customerStatus" id="status" defaultValue={customer.status} className="block w-5/6 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
+        <select name="customerStatus" id="status" defaultValue={customer.status} className="block w-full md:w-5/6 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
             <option id="in stock"  value="Active" >Active</option>
             <option id='out of stock'  value="Inactive">Inactive</option>
         </select>

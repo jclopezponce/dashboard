@@ -4,10 +4,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import { CountingNumber } from '@/components/ui/shadcn-io/counting-number';
 
 
 
-export function Cards() {
+export function Cards( {orders, amount, customers}: {orders: number, amount?: number, customers?: number} ) {
   return (
     <Box
       sx={{
@@ -33,7 +34,15 @@ export function Cards() {
           >
             <CardContent sx={{ height: '100%', width: '250px' }}>
               <Typography variant="h4" component="div" textAlign={'center'}>
-                $12,345
+                $
+                <CountingNumber
+      number={amount || 0}
+      decimalPlaces={2}
+      decimalSeparator=","
+      className="text-4xl"
+      inViewOnce
+      transition={{ stiffness: 800, damping: 10 }}
+    />
               </Typography>
               <Typography variant="body2" color="text.secondary" textAlign={'center'}>
                 Total Sales
@@ -55,7 +64,13 @@ export function Cards() {
           >
             <CardContent sx={{ height: '100%', width: '250px' }}>
               <Typography variant="h4" component="div" textAlign={'center'}>
-                1,234
+                          <CountingNumber
+      number={orders}
+      decimalSeparator=","
+      className="text-4xl"
+      inViewOnce
+      transition={{ stiffness: 800, damping: 10 }}
+    />
               </Typography>
               <Typography variant="body2" color="text.secondary" textAlign={'center'}>
                 Total Orders
@@ -77,10 +92,16 @@ export function Cards() {
           >
             <CardContent sx={{ height: '100%', width: '250px' }}>
               <Typography variant="h4" component="div" textAlign={'center'}>
-                567
+                                    <CountingNumber
+      number={customers || 0}
+      decimalSeparator=","
+      className="text-4xl"
+      inViewOnce
+      transition={{ stiffness: 800, damping: 10 }}
+    />
               </Typography>
               <Typography variant="body2" color="text.secondary" textAlign={'center'}>
-                New Customers
+                Customers
               </Typography>
             </CardContent>
           </CardActionArea>

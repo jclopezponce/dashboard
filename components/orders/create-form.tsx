@@ -44,7 +44,7 @@ export default function Form({products, customers}:{products : ProductsField[], 
     }, 0),
     });
     setErrors(state.errors || {});
-  }, [state.errors, state.previousValues]);
+  }, [state.errors, state.previousValues, orderLines, products]);
 
  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
   const { name, value } = e.target;
@@ -94,9 +94,9 @@ useEffect(() => {
 
   return (
     <form action={formAction}>
-      <div className="border-b border-white/10 pb-12">
+      <div className="border-b border-white/10 bg-gray-50 rounded-xl px-2 pb-12">
         <h2 className="text-base/10 font-semibold">New Sale</h2>
-        <p className="mt-1 text-sm/6 text-gray-400">Create sale</p>
+        <p className="mb-2 text-sm/6 text-gray-400">Create sale</p>
 
         {/* Name */}
         <label className="block text-sm/6 font-medium">Customer</label>
@@ -105,7 +105,7 @@ useEffect(() => {
           id="customer_id"
           value={order.customer_id}
           onChange={handleChange}
-          className={`block w-5/6 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
+          className={`block md:w-5/6 w-full rounded-md px-3 py-1.5 outline-1 -outline-offset-1
             placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
             focus:outline-indigo-500 sm:text-sm/6 ${errors?.customer_id ? 'border-red-500 border-2' : 'border-gray-300'}`}
           aria-describedby="status-error"
@@ -122,7 +122,7 @@ useEffect(() => {
         {/* Date */}
         <div className="col-span-full">
           <label className="block text-sm/6 font-medium">Date</label>
-          <div className="mt-2">
+          <div >
             <input
               
               id="order_date"
@@ -130,7 +130,7 @@ useEffect(() => {
               name="order_date"
               value={order.order_date}
               onChange={handleChange}
-              className={`block w-5/6 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
+              className={`block md:w-5/6 w-full rounded-md px-3 py-1.5 outline-1 -outline-offset-1
                 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
                 focus:outline-indigo-500 sm:text-sm/6 ${errors?.order_date ? 'border-red-500 border-2' : 'border-gray-300'}`}
 
@@ -140,13 +140,13 @@ useEffect(() => {
         </div>
         {/* Products */}
         <label className="block text-sm/6 font-medium">Products</label>
-        <div className='flex flex-row '>
+        <div className='flex flex-row'>
         <select
           name="product_id"
           id="product_id"
           value={currentLine.product_id}
           onChange={handleCurrentLineChange}
-          className={`basis-1/3 block w-5/6 rounded-md mr-5 px-3 py-1.5 outline-1 -outline-offset-1
+          className={`md:basis-1/3 block w-45 md:w-5/6 rounded-md mr-5 px-3 py-1.5 outline-1 -outline-offset-1
             placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
             focus:outline-indigo-500 sm:text-sm/6}`}
           aria-describedby="status-error"
@@ -171,7 +171,7 @@ useEffect(() => {
           </Tooltip>
         </Fab>
         </div>
-        <div className='border rounded-md w-75 mt-5'>
+        <div className='border rounded-md md:w-75 mt-5'>
               <table className="w-full ">
         <thead>
           <tr>
@@ -239,7 +239,7 @@ useEffect(() => {
           id="status"
           value={order.status}
           onChange={handleChange}
-          className={`block w-5/6 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
+          className={`block w-full md:w-5/6 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
             placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
             focus:outline-indigo-500 sm:text-sm/6 ${errors?.status ? 'border-red-500 border-2' : 'border-gray-300'}`}
           aria-describedby="status-error"

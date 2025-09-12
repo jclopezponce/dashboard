@@ -33,7 +33,7 @@ export function DeleteProduct ({id} : {id: string}) {
 export function UpdateCostumer({id} : {id: string}) {
     return (
         <Link 
-        href={`/dashboard/customers/${id}/edit`}>
+        href={`/dashboard/customers/${id}/edit`} >
         <Tooltip title="Edit">
         <Pencil/>
         </Tooltip>

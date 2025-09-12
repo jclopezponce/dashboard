@@ -1,5 +1,5 @@
 import  CustomersTable from "@/components/customers/table"
-import {SearchInput} from "@/components/products/search-input"
+import {SearchInput} from "@/components/search-input"
 import { Suspense } from 'react';
 import {fetchProductsPages } from "@/lib/data";
 import { Button } from "@/components/ui/button";

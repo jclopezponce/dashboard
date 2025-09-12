@@ -12,30 +12,30 @@ export default function Form ({product} : {product : ProductForm}){
  
     return (
         <form action={formAction}>
-             <div className="border-b border-white/10 pb-12">
+             <div className="border-b border-white/10 bg-gray-50 rounded-xl px-2 pb-12">
       <h2 className="text-base/10 font-semibold">Update Product</h2>
       <p className="mt-1 text-sm/6 text-gray-400">Update product for your sales</p>
 
         <div className="col-span-full mt-8">
           <label className="block text-sm/6 font-medium">Name</label>
-          <div className="mt-2">
-            <input id="name" type="text" name="productName" defaultValue={product.name} className="block w-5/6 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" aria-describedby="name-error" />
+          <div>
+            <input id="name" type="text" name="productName" defaultValue={product.name} className="block w-full md:w-5/6 mb-2 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" aria-describedby="name-error" />
           </div>
         </div>
            <div className="col-span-full">
           <label className="block text-sm/6 font-medium">Price</label>
           <div className="mt-2">
-            <input id="stock" type="number" name="productPrice" defaultValue={product.price} className="block w-5/6 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+            <input id="stock" type="number" name="productPrice" defaultValue={product.price} className="block w-full md:w-5/6 mb-2 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
           </div>
         </div>
            <div className="col-span-full">
           <label className="block text-sm/6 font-medium">Total Sales</label>
           <div className="mt-2">
-            <input id="totalSales" type="number" name="productTotalSales" defaultValue={product.totalsales} className="block w-5/6 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+            <input id="totalSales" type="number" name="productTotalSales" defaultValue={product.totalsales} className="block w-full md:w-5/6 mb-2 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
           </div>
         </div>
         <label className="block text-sm/6 font-medium">Status</label>
-        <select name="productStatus" id="status" defaultValue={product.status} className="block w-5/6 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
+        <select name="productStatus" id="status" defaultValue={product.status} className="block w-full md:w-5/6 rounded-md px-3 py-1.5  outline-1 -outline-offset-1 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
             <option id="in stock"  value="In Stock" >In Stock</option>
             <option id='out of stock'  value="Out of Stock">Out of Stock</option>
         </select>

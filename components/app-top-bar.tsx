@@ -8,22 +8,20 @@ import Typography from '@mui/material/Typography';
 import { SidebarTrigger } from "./ui/sidebar";
 
 export default function AppTopBar() {
-  const pathname = usePathname(); // e.g. "/dashboard"
+  const pathname = usePathname();
 
   // Map pathnames to display names
   const getTitle = () => {
-    if (pathname === "/dashboard/products") return "Products";
-    if (pathname === "/dashboard/customers") return "Customers";
+    if (pathname.includes("/dashboard/products") ) return "Products";
+    if (pathname.includes("/dashboard/customers")) return "Customers";
     if (pathname === "/") return "Dashboard";
     return "Sales";
   };
 
   const currentURL = getTitle();
 
-  console.log("Current URL:", currentURL);
-
   return (
-    <Box sx={{ flexGrow: 1 }} className="flex justify-between items-center px-4 border-b">
+    <Box sx={{ flexGrow: 1 }} className="flex justify-between items-center px-4 border-b mr-4">
         <SidebarTrigger />
       <AppBar position="static" sx={{ bgcolor: "inherit", boxShadow: 'none' }}>
         <Toolbar variant="dense" className="flex justify-end">
