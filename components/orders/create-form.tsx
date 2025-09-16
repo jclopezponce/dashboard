@@ -32,19 +32,26 @@ export default function Form({products, customers}:{products : ProductsField[], 
     price: 0,
   });
 
-  // Sync server errors into local state whenever they change
+ // 1️⃣ Sync previousValues and errors from server
   useEffect(() => {
-    setOrder({
-    customer_id: state.previousValues?.customer_id || "",
-    order_date : state.previousValues?.order_date || "",
-    status: state.previousValues?.status || "",
-    total : orderLines.reduce((sum, line) => {
+    setOrder(prev => ({
+      ...prev,
+      customer_id: state.previousValues?.customer_id || '',
+      order_date: state.previousValues?.order_date || '',
+      status: state.previousValues?.status || '',
+    }));
+    setErrors(state.errors || {});
+  }, [state.previousValues, state.errors]);
+
+  // 2️⃣ Calculate total whenever orderLines or products change
+  useEffect(() => {
+    const newTotal = orderLines.reduce((sum, line) => {
       const product = products.find(p => p.id.toString() === line.product_id);
       return sum + (product ? product.price * line.quantity : 0);
-    }, 0),
-    });
-    setErrors(state.errors || {});
-  }, [state.errors, state.previousValues]);
+    }, 0);
+
+    setOrder(prev => ({ ...prev, total: newTotal }));
+  }, [orderLines, products]);
 
  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
   const { name, value } = e.target;
