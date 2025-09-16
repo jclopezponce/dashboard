@@ -12,9 +12,6 @@ const ProductSchema = z.object({
   id: z.string(),
   name: z.string().min(1, { message: "Enter name" }),
   price: z.coerce.number().min(1, { message: "Enter price" }),
-  totalSales: z.coerce.number().min(1,{
-    message: "Enter sales",
-  }),
    status: z.preprocess(
     (val) => (val === null ? "" : val),
     z.string()
@@ -31,14 +28,12 @@ export type ProductState = {
   errors?: {
     name?: string[];
     price?: string[];
-    totalSales?: string[];
     status?: string[];
   };
   message?: string | null;
   previousValues? :{
     name?: string;
     price?: string;
-    totalSales?: string;
     status?: string;
   }
 };
@@ -48,7 +43,6 @@ export async function createProduct(prevState: ProductState, formData : FormData
     const validatedFields  = CreateProduct.safeParse({
         name : formData.get('productName'),
         price : formData.get('productPrice'),
-        totalSales : formData.get('productTotalSales'),
         status : formData.get('productStatus')
     });
       if (!validatedFields.success) {
@@ -58,12 +52,12 @@ export async function createProduct(prevState: ProductState, formData : FormData
        previousValues: {
         name: formData.get('productName')?.toString() || '',
         price: formData.get('productPrice')?.toString() || '',
-        totalSales: formData.get('productTotalSales')?.toString() || '',
         status: formData.get('productStatus')?.toString() || ''
       }
     };
   }
-     const {name, price, totalSales, status} = validatedFields.data;
+    const totalSales = 0;
+     const {name, price, status} = validatedFields.data;
      const date = new Date().toISOString().split('T')[0];
      
      try {
@@ -83,7 +77,6 @@ export async function updateProduct(id : string, prevState: ProductState, formDa
       const validatedFields  = UpdateProduct.safeParse({
         name : formData.get('productName'),
         price : formData.get('productPrice'),
-        totalSales : formData.get('productTotalSales'),
         status : formData.get('productStatus')
     });
      if (!validatedFields.success) {
@@ -93,15 +86,14 @@ export async function updateProduct(id : string, prevState: ProductState, formDa
       previousValues: {
         name: formData.get("name")?.toString() || "",
         price: formData.get("price")?.toString() || "",
-        totalSales: formData.get("totalSales")?.toString() || "",
         status: formData.get("status")?.toString() || "",}
     };
   }
-  const {name, price, totalSales, status} = validatedFields.data;
+  const {name, price, status} = validatedFields.data;
     try {
         await sql`
         UPDATE products 
-        SET name = ${name}, price = ${price}, totalsales = ${totalSales}, status = ${status}
+        SET name = ${name}, price = ${price}, status = ${status}
         WHERE id = ${id}`;
     } catch (error) {
         console.log(error)
@@ -241,18 +233,19 @@ const CreateOrder = OrdersSchema.omit({id : true});
 const UpdateOrder = OrdersSchema.omit({id : true});
 
 export type OrderState = {
-  errors?: {
+  message: string ; // always a string
+  errors: {
     customer_id?: string[];
     status?: string[];
     order_date?: string[];
   };
-  message?: string | null;
-  previousValues? :{
+  previousValues?: {
     customer_id?: string;
     status?: string;
     order_date?: string;
-  }
+  };
 };
+
 
 export async function createOrder(prevState: OrderState, formData : FormData) {
     const validatedFields  = CreateOrder.safeParse({
@@ -309,6 +302,13 @@ export async function createOrder(prevState: OrderState, formData : FormData) {
       await sql.unsafe(
         `INSERT INTO order_items (order_id, product_id, quantity) VALUES ${values}`
       );
+        for (const line of orderLines) {
+          await sql`
+          UPDATE products
+          SET totalsales = COALESCE(totalsales, 0) + ${line.quantity}
+          WHERE id = ${line.product_id}
+       `;
+      }
     }
      } catch (error) {
         console.log(error)
@@ -319,67 +319,117 @@ export async function createOrder(prevState: OrderState, formData : FormData) {
     
 }
 
-export async function updateOrder(order_id : string, prevState: OrderState, formData : FormData) {
-      const validatedFields  = UpdateOrder.safeParse({
-        customer_id : formData.get('customer_id'),
-        status : formData.get('status'),
-        order_date: formData.get('order_date'),
-        total: formData.get('total')
-    });
-      if (!validatedFields.success) {
+
+export async function updateOrder(
+  order_id: string,
+  prevState: OrderState,
+  formData: FormData
+) {
+  const validatedFields = UpdateOrder.safeParse({
+    customer_id: formData.get("customer_id"),
+    status: formData.get("status"),
+    order_date: formData.get("order_date"),
+    total: formData.get("total"),
+  });
+
+  if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Failed to Update Order',
+      message: "Failed to Update Order",
       previousValues: {
         customer_id: formData.get("customer_id")?.toString() || "",
         status: formData.get("status")?.toString() || "",
-        order_date: formData.get("order_date")?.toString() || "", 
-      }
+        order_date: formData.get("order_date")?.toString() || "",
+      },
     };
   }
-  const {customer_id, status, order_date, total} = validatedFields.data;
 
-    // Parse order lines into ProductLine[] 
+  const { customer_id, status, order_date, total } = validatedFields.data;
+
+  // Parse order lines into ProductLine[]
   const orderLines: ProductLine[] = [];
   for (const [key, value] of formData.entries()) {
-    const match = key.match(/^orderLines\[(\d+)\]\[(product_id|quantity)\]$/);  
+    const match = key.match(/^orderLines\[(\d+)\]\[(product_id|quantity)\]$/);
     if (match) {
       const index = parseInt(match[1]);
       const field = match[2] as keyof ProductLine;
-      if (!orderLines[index]) orderLines[index] = { product_id: "", quantity: 0, price: 0 };
-        if (field === "product_id") {
+      if (!orderLines[index])
+        orderLines[index] = { product_id: '', quantity: 0, price: 0 };
+
+      if (field === "product_id") {
         orderLines[index].product_id = value.toString();
       } else if (field === "quantity") {
         orderLines[index].quantity = Number(value);
       }
     }
   }
-    try {
-        // 1️⃣ Update order
-        await sql`
-        UPDATE orders 
-        SET customer_id = ${customer_id}, status = ${status}, order_date = ${order_date}, total_amount = ${total}
-        WHERE order_id = ${order_id}`;
-        // 2️⃣ Delete existing order items
-        await sql`DELETE FROM order_items WHERE order_id = ${order_id}`;
-        // 3️⃣ Insert new order items
-        if (orderLines.length > 0)
-        {
-        const values = orderLines
-        .map((line) => `(${order_id}, '${line.product_id}', ${line.quantity})`)
-        .join(', ');
-        await sql.unsafe(
-        `INSERT INTO order_items (order_id, product_id, quantity) VALUES ${values}`
-        );
-        }
-    } catch (error) {
-        console.log(error)
-    }
+  const numericOrderId = Number(order_id);
+  const oldProductIdsQuery = await sql`
+    SELECT product_id FROM order_items WHERE order_id = ${numericOrderId}
+  `;
+  const oldProductIds = oldProductIdsQuery.map((row) => row.product_id);
+  const newProductIds = orderLines.map((line) => line.product_id);
+  const affectedProductIds = Array.from(new Set([...oldProductIds, ...newProductIds]));
 
-        
-  revalidatePath('/dashboard/sales');
-  redirect('/dashboard/sales');
+  try {
+    await sql.begin(async (tx) => {
+      // 1️⃣ Update order details
+      await tx`
+        UPDATE orders
+        SET customer_id = ${customer_id},
+            status = ${status},
+            order_date = ${order_date},
+            total_amount = ${total}
+        WHERE order_id = ${numericOrderId}
+      `;
+
+      // 2️⃣ Delete existing order items
+      await tx`
+        DELETE FROM order_items WHERE order_id = ${numericOrderId}
+      `;
+
+      // 3️⃣ Insert new order items
+      if (orderLines.length > 0) {
+        const insertValues: string[] = [];
+        const params: any[] = [];
+
+        orderLines.forEach((line, i) => {
+          insertValues.push(`($${i * 3 + 1}, $${i * 3 + 2}, $${i * 3 + 3})`);
+          params.push(numericOrderId, line.product_id, line.quantity);
+        });
+
+        const insertQuery = `
+          INSERT INTO order_items (order_id, product_id, quantity)
+          VALUES ${insertValues.join(", ")}
+        `;
+        await tx.unsafe(insertQuery, params);
+      }
+
+      // 4️⃣ Recalculate totalsales for affected products
+      if (affectedProductIds.length > 0) {
+        const recalcQuery = `
+          UPDATE products p
+          SET totalsales = sub.total_qty
+          FROM (
+            SELECT product_id, SUM(quantity) AS total_qty
+            FROM order_items
+            WHERE product_id IN (${affectedProductIds.map((_, i) => `$${i + 1}`).join(", ")})
+            GROUP BY product_id
+          ) sub
+          WHERE p.id = sub.product_id
+        `;
+        await tx.unsafe(recalcQuery, affectedProductIds);
+      }
+    });
+  } catch (error) {
+    console.error("❌ Update Order Failed:", error);
+    return { message: "Database update failed", errors: {} };
+  }
+
+  revalidatePath("/dashboard/sales");
+  redirect("/dashboard/sales");
 }
+
 
 export async function deleteOrder(order_id : string) {
     await sql`DELETE FROM order_items WHERE order_id = ${order_id}`;

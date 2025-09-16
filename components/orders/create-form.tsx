@@ -14,7 +14,7 @@ import { USDollar } from '@/lib/utils';
 
 
 export default function Form({products, customers}:{products : ProductsField[], customers: CustomerField[]}) {
-  const initialState: OrderState = { message: null, errors: {}, previousValues: {} };
+  const initialState: OrderState = { message: '', errors: {}, previousValues: {} };
   const [state, formAction] = useActionState(createOrder, initialState);
 
   // Local copy of errors (so we can clear them on typing)
@@ -44,7 +44,7 @@ export default function Form({products, customers}:{products : ProductsField[], 
     }, 0),
     });
     setErrors(state.errors || {});
-  }, [state.errors, state.previousValues, orderLines, products]);
+  }, [state.errors, state.previousValues]);
 
  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
   const { name, value } = e.target;
@@ -113,7 +113,9 @@ useEffect(() => {
           <option value="" disabled>
             Select Customer
           </option>
-          {customers.map((customer)=> (
+          {customers
+          .filter((customer) => customer.status === "Active")
+          .map((customer)=> (
             <option key={customer.id} value={customer.id}>
             {customer.name}
             </option>
@@ -155,6 +157,7 @@ useEffect(() => {
             Select Product
           </option>
           {products
+          .filter(product  => product.status === "In Stock")
           .filter(p => !orderLines.some(line => line.product_id === p.id.toString()))
           .map((product)=> (
             <option key={product.id} value={product.id}>

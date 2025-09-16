@@ -11,7 +11,6 @@ export type ProductForm = {
     id : string,
     name : string,
     price : number,
-    totalsales : number,
     status : "In Stock" | "Out of Stock",
     createdDate : Date
 }
@@ -50,7 +49,8 @@ export type OrdersForm = {
 
 export type CustomerField = {
     id : string;
-    name: string
+    name: string;
+    status:string
 }
 
 export type ProductsField = {

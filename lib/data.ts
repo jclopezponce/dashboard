@@ -128,7 +128,8 @@ export async function fetchCustomers() {
     const customers = await sql<CustomerField[]>`
       SELECT
         id,
-        name
+        name,
+        status
       FROM customers
       ORDER BY name ASC
     `;
@@ -145,7 +146,8 @@ export async function fetchProducts() {
       SELECT
         id,
         name, 
-        price
+        price,
+        status
       FROM products
       ORDER BY name ASC
     `;

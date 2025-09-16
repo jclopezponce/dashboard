@@ -14,9 +14,12 @@ import { USDollar } from '@/lib/utils';
 
 
 export default function Form({products, customers, order, initialOrderLines}:{products : ProductsField[], customers: CustomerField[], order?: OrdersForm, initialOrderLines?: ProductLine[]}) {
-  const initialState: OrderState = { message: null, errors: {}, previousValues: {} };
+  const initialState: OrderState = { message: '', errors: {}, previousValues: {} };
   const updateOrderWithId = updateOrder.bind(null, order?.order_id || "");
-  const [state, formAction] = useActionState(updateOrderWithId, initialState);
+  const [state, formAction] = useActionState<OrderState, FormData>(
+  updateOrderWithId,
+  initialState
+);
 
   // Local copy of errors (so we can clear them on typing)
   // Map customer name back to ID
@@ -65,18 +68,6 @@ const [currentLine, setCurrentLine] = useState<ProductLine>({
     [name]: value,
   }));
  }
-  // Map frontend input names -> schema keys
-//   const fieldMap = {
-//     customer_id: "customer_id",
-//     status: "status",
-//     order_date: "order_date",
-//   } as const;
-
-//   const schemaKey = fieldMap[name as keyof typeof fieldMap];
-//   if (schemaKey && errors?.[schemaKey]) {
-//     setErrors((prev) => ({ ...prev, [schemaKey]: undefined }));
-//   }
-// }
 
 function handleCurrentLineChange(e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) {
   const { name, value } = e.target;
@@ -114,7 +105,9 @@ function addProductLine() {
           <option value="" disabled>
             Select Customer
           </option>
-          {customers.map((customer)=> (
+          {customers
+          .filter((customer) => customer.status === "Active")
+          .map((customer)=> (
             <option key={customer.id} value={customer.id}>
             {customer.name}
             </option>
@@ -158,6 +151,7 @@ function addProductLine() {
             Select Product
           </option>
           {products
+          .filter(product  => product.status === "In Stock")
           .filter(p => !orderLines.some(line => line.product_id === p.id.toString()))
           .map((product)=> (
             <option key={product.id} value={product.id}>
@@ -265,7 +259,7 @@ function addProductLine() {
 
         {/* Buttons */}
         <Button type="submit" className="mt-4 bg-emerald-500/100 w-25" disabled={orderLines.length === 0}>
-          Create
+          Update
         </Button>
         <Button asChild className="ml-2 w-25">
           <Link href="/dashboard/sales">Cancel</Link>

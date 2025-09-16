@@ -22,7 +22,6 @@ export default function Form() {
   const fieldMap = {
     productName: 'name',
     productPrice: 'price',
-    productTotalSales: 'totalSales',
     productStatus: 'status',
   } as const;
 
@@ -83,24 +82,6 @@ export default function Form() {
                 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
                 focus:outline-indigo-500 sm:text-sm/6 ${errors?.price ? 'border-red-500 border-2' : 'border-gray-300'}`}
               aria-describedby="price-error"
-            />
-          </div>
-        </div>
-
-        {/* Total Sales */}
-        <div className="col-span-full">
-          <label className="block text-sm/6 font-medium">Total Sales</label>
-          <div className="mt-2">
-            <input
-              id="totalsales"
-              type="number"
-              name="productTotalSales"
-              defaultValue={state.previousValues?.totalSales || ''}
-              onChange={handleChange}
-              className={`block w-full md:w-5/6 mb-2 rounded-md px-3 py-1.5 outline-1 -outline-offset-1
-                placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
-                focus:outline-indigo-500 sm:text-sm/6 ${errors?.totalSales ? 'border-red-500 border-2' : 'border-gray-300'}`}
-              aria-describedby="sales-error"
             />
           </div>
         </div>
