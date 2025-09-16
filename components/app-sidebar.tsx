@@ -19,7 +19,6 @@ const items = [
   { title: "Products", url: "/dashboard/products", icon: Box },
   { title: "Customers", url: "/dashboard/customers", icon: CircleUserRound },
   { title: "Sales", url: "/dashboard/sales", icon: Handbag },
-  { title: "Settings", url: "#", icon: Settings },
 ];
 
 export function AppSidebar() {
