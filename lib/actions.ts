@@ -391,7 +391,7 @@ export async function updateOrder(
       // 3️⃣ Insert new order items
       if (orderLines.length > 0) {
         const insertValues: string[] = [];
-        const params: any[] = [];
+        const params: (number | string)[] = [];
 
         orderLines.forEach((line, i) => {
           insertValues.push(`($${i * 3 + 1}, $${i * 3 + 2}, $${i * 3 + 3})`);
