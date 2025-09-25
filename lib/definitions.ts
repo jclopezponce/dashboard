@@ -33,6 +33,7 @@ export type CustomerForm = {
 
 export type OrdersTable = {
     order_id: string, 
+    order_table_id: string, 
     name: string;
     status: "Pending" | "Paid";
     order_date: Date;

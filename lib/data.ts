@@ -164,7 +164,7 @@ export async function fetchOrdersPages(query: string) {
     FROM orders o
     JOIN customers c ON o.customer_id = c.id 
     WHERE
-      o.order_id::text ILIKE ${`%${query}%`} OR
+      o.order_table_id::text ILIKE ${`%${query}%`} OR
       o.order_date::text ILIKE ${`%${query}%`} OR
       o.status ILIKE ${`%${query}%`} OR
       o.total_amount::text ILIKE ${`%${query}%`} OR
@@ -186,7 +186,8 @@ export async function fetchFilteredOrders(
     try {
         const orders = await sql<OrdersTable[]> `
         SELECT 
-        o.order_id, 
+        o.order_id,
+        o.order_table_id,
         o.order_date, 
         o.status,
         o.total_amount,
@@ -199,7 +200,7 @@ export async function fetchFilteredOrders(
         o.status ILIKE ${`%${query}%`} OR
         o.total_amount::text ILIKE ${`%${query}%`} OR
         c.name ILIKE ${`%${query}%`}
-      ORDER BY o.order_id DESC
+      ORDER BY o.order_table_id DESC
       LIMIT ${itemPerPage} OFFSET ${offset};`
         return orders
     } catch (error) {

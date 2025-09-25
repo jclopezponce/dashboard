@@ -50,7 +50,7 @@ export default async function OrdersTable({
                   <td className="whitespace-nowrap py-3 pl-6 pr-3 sticky left-0 bg-white z-10">
                     <div className="flex items-center gap-3 ">
                      
-                      <p>{order.order_id}</p>
+                      <p>{order.order_table_id}</p>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
